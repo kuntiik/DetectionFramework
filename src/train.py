@@ -20,7 +20,8 @@ def train(config : DictConfig):
     # model = EfficientDetModule()
     model_type = models.ross.efficientdet
     backbone = model_type.backbones.tf_lite0(pretrained=0)
-    det_model = model_type.model(backbone=backbone, num_classes = 2, img_size = 512)
+    #backbone = model_type.backbones.tf_d5(pretrained=0)
+    det_model = model_type.model(backbone=backbone, num_classes = 2, img_size = 768)
     model = EfficientDetModule(det_model, 1e-4)
 
 
@@ -43,7 +44,8 @@ def train(config : DictConfig):
 
     # dm = MNISTDataModule(num_workers=4, pin_memory=False)
     # dm = hydra.utils.instantiate(config.datamodule)
-    dm = DentalCariesDataModule('/home/kuntik/carries_dataset', 512, model_type)
+    #dm = DentalCariesDataModule('/home/kuntik/carries_dataset', 512, model_type)
+    dm = DentalCariesDataModule('/home.stud/kuntluka/dataset/carries_dataset', 768, model_type, batch_size = 4, num_workers = 4)
 
     trainer.tune(model=model, datamodule=dm)
     log.info("Starting training")

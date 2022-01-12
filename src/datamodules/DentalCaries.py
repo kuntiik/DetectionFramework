@@ -32,7 +32,7 @@ class DentalCariesDataModule(pl.LightningDataModule):
     def __init__(self, data_root : str, image_size : int, model_type, batch_size : int = 4, num_workers : int = 4):
         super().__init__()
         self.save_hyperparameters(ignore=['model_type'])
-        self.train_tfms = tfms.A.Adapter([*tfms.A.aug_tfms(size=image_size, presize=600), tfms.A.Normalize()])
+        self.train_tfms = tfms.A.Adapter([*tfms.A.aug_tfms(size=image_size, presize=image_size), tfms.A.Normalize()])
         self.valid_tfms = tfms.A.Adapter([*tfms.A.resize_and_pad(image_size), tfms.A.Normalize()])
         self.model_type = model_type
     
