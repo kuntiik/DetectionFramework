@@ -1,0 +1,40 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.9
+    framework: lightning
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    m:
+    - 1: trainer/global_step
+      6:
+      - 3
+    python_version: 3.8.12
+    start_time: 1642014102
+    t:
+      1:
+      - 1
+      - 4
+      - 5
+      - 9
+      4: 3.8.12
+      5: 0.12.9
+      8:
+      - 5
+batch_size:
+  desc: null
+  value: 4
+data_root:
+  desc: null
+  value: /home/kuntik/carries_dataset
+image_size:
+  desc: null
+  value: 512
+learning_rate:
+  desc: null
+  value: 0.0001
+num_workers:
+  desc: null
+  value: 4

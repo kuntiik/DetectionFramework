@@ -1,0 +1,14 @@
+defaults:
+  - _self_
+  - trainer: default.yaml
+  # - module : efficient_det.yaml
+  # - datamodule : dental_caries.yaml
+  - logger : wandb.yaml
+  - callbacks : callbacks.yaml
+  # - logger: wandb # set logger here or use command line (e.g. `python run.py logger=wandb`)
+  - override hydra/hydra_logging: colorlog
+  - override hydra/job_logging: colorlog
+
+seed : null
+name : null
+ignore_warnings: False
