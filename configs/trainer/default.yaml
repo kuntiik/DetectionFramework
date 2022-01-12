@@ -1,10 +1,10 @@
 _target_: pytorch_lightning.Trainer
 
 # overfit_batches : 2
-gpus: 1
-#strategy : "ddp"
+gpus: 2
+strategy : "ddp"
 # auto_select_gpus : True
-auto_lr_find : True
+# auto_lr_find : True
 # overfit_batches : 8
 
 min_epochs: 30 

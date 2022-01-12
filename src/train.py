@@ -1,8 +1,10 @@
 import hydra
+from icevision.models.ultralytics.yolov5 import backbones
 from omegaconf import DictConfig
 from pytorch_lightning import (Callback, LightningDataModule, LightningModule, Trainer, seed_everything)
 from pytorch_lightning.loggers import LightningLoggerBase
 from icevision.all import models
+from src.modules.YoloV5Module import YoloV5Module
 
 from src.utils import utils
 
@@ -18,11 +20,17 @@ def train(config : DictConfig):
     # log.info(f"Instantiating module <{config.model._target_}>")
     # model = hydra.utils.instantiate(config.model)
     # model = EfficientDetModule()
-    model_type = models.ross.efficientdet
-    backbone = model_type.backbones.tf_lite0(pretrained=0)
+
+    # model_type = models.ross.efficientdet
+    # backbone = model_type.backbones.tf_lite0(pretrained=0)
+
+    model_type = models.ultralytics.yolov5
+    backbone = model_type.backbones.large_p6(pretrained=True)
+
     #backbone = model_type.backbones.tf_d5(pretrained=0)
     det_model = model_type.model(backbone=backbone, num_classes = 2, img_size = 768)
-    model = EfficientDetModule(det_model, 1e-4)
+    # model = EfficientDetModule(det_model, 1e-4)
+    model = YoloV5Module(det_model, 1e-4)
 
 
     callbacks = []
@@ -44,8 +52,8 @@ def train(config : DictConfig):
 
     # dm = MNISTDataModule(num_workers=4, pin_memory=False)
     # dm = hydra.utils.instantiate(config.datamodule)
-    #dm = DentalCariesDataModule('/home/kuntik/carries_dataset', 512, model_type)
-    dm = DentalCariesDataModule('/home.stud/kuntluka/dataset/carries_dataset', 768, model_type, batch_size = 4, num_workers = 4)
+    # dm = DentalCariesDataModule('/home/kuntik/carries_dataset', 512, model_type, batch_size=2, num_workers=4)
+    dm = DentalCariesDataModule('/home.stud/kuntluka/dataset/carries_dataset', 768, model_type, batch_size = 2, num_workers = 4)
 
     trainer.tune(model=model, datamodule=dm)
     log.info("Starting training")
