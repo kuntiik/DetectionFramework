@@ -21,16 +21,17 @@ def train(config : DictConfig):
     # model = hydra.utils.instantiate(config.model)
     # model = EfficientDetModule()
 
-    # model_type = models.ross.efficientdet
+    #model_type = models.ross.efficientdet
     # backbone = model_type.backbones.tf_lite0(pretrained=0)
 
     model_type = models.ultralytics.yolov5
-    backbone = model_type.backbones.large_p6(pretrained=True)
+    backbone = model_type.backbones.extra_large_p6(pretrained=True)
 
-    #backbone = model_type.backbones.tf_d5(pretrained=0)
-    det_model = model_type.model(backbone=backbone, num_classes = 2, img_size = 768)
-    # model = EfficientDetModule(det_model, 1e-4)
-    model = YoloV5Module(det_model, 1e-4)
+    img_size = 1024 
+    #backbone = model_type.backbones.tf_d4(pretrained=1)
+    det_model = model_type.model(backbone=backbone, num_classes = 2, img_size = img_size)
+    #model = EfficientDetModule(det_model, 1e-4)
+    model = YoloV5Module(det_model, 1e-5)
 
 
     callbacks = []
@@ -53,7 +54,7 @@ def train(config : DictConfig):
     # dm = MNISTDataModule(num_workers=4, pin_memory=False)
     # dm = hydra.utils.instantiate(config.datamodule)
     # dm = DentalCariesDataModule('/home/kuntik/carries_dataset', 512, model_type, batch_size=2, num_workers=4)
-    dm = DentalCariesDataModule('/home.stud/kuntluka/dataset/carries_dataset', 768, model_type, batch_size = 2, num_workers = 4)
+    dm = DentalCariesDataModule('/home.stud/kuntluka/dataset/carries_dataset', img_size, model_type, batch_size = 2, num_workers = 4)
 
     trainer.tune(model=model, datamodule=dm)
     log.info("Starting training")
