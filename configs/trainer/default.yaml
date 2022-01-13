@@ -1,15 +1,15 @@
 _target_: pytorch_lightning.Trainer
 
 # overfit_batches : 2
-gpus: 2
-strategy : "ddp"
+gpus: 1
+#strategy : "ddp"
 # auto_select_gpus : True
-# auto_lr_find : True
+#auto_lr_find : True
 # overfit_batches : 8
+#resume_from_checkpoint : "/home.stud/kuntluka/DetectionFramework/outputs/2022-01-12/efficient_detp5_34map50/ice_framework/rh27uk17/checkpoints/epoch=29-step=9749.ckpt"
 
-min_epochs: 30 
-max_epochs: 70
+min_epochs: 80 
+max_epochs: 150
 
 # progress_bar_refresh_rate: 1
 # limit_train_batches : 0.05
-resume_from_checkpoint: null
