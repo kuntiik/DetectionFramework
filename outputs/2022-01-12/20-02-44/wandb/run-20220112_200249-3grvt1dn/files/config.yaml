@@ -27,6 +27,70 @@ _wandb:
       5: 1
       6:
       - 1
+    - 1: valid/loss
+      5: 1
+      6:
+      - 1
+    - 1: valid/class_loss
+      5: 1
+      6:
+      - 1
+    - 1: valid/box_loss
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.50:0\.95) area=all
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.50) area=all
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.75) area=all
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.50:0\.95) area=small
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.50:0\.95) area=medium
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AP (IoU=0\.50:0\.95) area=large
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=all maxDets=1
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=all maxDets=10
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=all maxDets=100
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=small maxDets=100
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=medium maxDets=100
+      5: 1
+      6:
+      - 1
+    - 1: COCOMetric/AR (IoU=0\.50:0\.95) area=large maxDets=100
+      5: 1
+      6:
+      - 1
     python_version: 3.8.12
     start_time: 1642014169
     t:

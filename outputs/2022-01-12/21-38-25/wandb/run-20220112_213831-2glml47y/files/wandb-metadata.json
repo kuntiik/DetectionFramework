@@ -1,0 +1,22 @@
+{
+    "os": "Linux-5.11.0-46-generic-x86_64-with-glibc2.17",
+    "python": "3.8.12",
+    "heartbeatAt": "2022-01-12T20:38:33.376201",
+    "startedAt": "2022-01-12T20:38:31.227937",
+    "docker": null,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/kuntik/dev/DetectionFramework/run.py",
+    "codePath": "run.py",
+    "git": {
+        "remote": "https://github.com/kuntiik/DetectionFramework.git",
+        "commit": "440fbf979deb26995fcae5e0d7545c768332ff8e"
+    },
+    "email": "kunt.lukas@gmail.com",
+    "root": "/home/kuntik/dev/DetectionFramework",
+    "host": "kuntik",
+    "username": "kuntik",
+    "executable": "/home/kuntik/miniconda3/envs/ice/bin/python"
+}
