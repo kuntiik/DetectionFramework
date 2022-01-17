@@ -1,5 +1,6 @@
 from icevision.all import *
 import pandas as pd
+import icevision
 
 
 class DentalCariesParser(Parser):
@@ -34,7 +35,10 @@ class DentalCariesDataModule(pl.LightningDataModule):
         self.save_hyperparameters(ignore=['model_type'])
         self.train_tfms = tfms.A.Adapter([*tfms.A.aug_tfms(size=image_size, presize=image_size), tfms.A.Normalize()])
         self.valid_tfms = tfms.A.Adapter([*tfms.A.resize_and_pad(image_size), tfms.A.Normalize()])
-        self.model_type = model_type
+        m = icevision
+        for mod in model_type.split('.'):
+            m = getattr(m, mod)
+        self.model_type = m
     
     def setup(self, stage : Optional[str] = None):
         template_record = ObjectDetectionRecord()

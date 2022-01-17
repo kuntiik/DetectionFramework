@@ -1,4 +1,6 @@
-__target__ : src.datamodules.DentalCaries.DentalCariesDataModule
-  data_root : /home/kuntik/carries_dataset
-  image_size : 512
-  model_type : models.ross.efficientdet.tf_lite0
+_target_ : src.datamodules.DentalCaries.DentalCariesDataModule
+data_root : /home/kuntik/carries_dataset
+image_size : ${module.img_size}
+model_type : ${module.model_type}
+batch_size : 1
+num_workers : 1
