@@ -1,4 +1,4 @@
-# Dental Caries Detection
+# Object Detection Framework
 
 ## To run:
 - conda env create -f environment.yaml (heavy on dependencies)
