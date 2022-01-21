@@ -1,6 +1,9 @@
 from icevision.all import *
 import pandas as pd
 import icevision
+from icevision.data.data_splitter import RandomSplitter
+
+from torchmetrics import MaxMetric
 
 
 class DentalCariesParser(Parser):
@@ -29,12 +32,14 @@ class DentalCariesParser(Parser):
             record.detection.add_bboxes([BBox.from_xyxy(o.xmin, o.ymin, o.xmax, o.ymax)])
             record.detection.add_labels(["decay"])
 
+
 class DentalCariesDataModule(pl.LightningDataModule):
-    def __init__(self, data_root : str, image_size : int, model_type, batch_size : int = 4, num_workers : int = 4):
+    def __init__(self, data_root : str, image_size : int, model_type, batch_size : int = 4, num_workers : int = 4, seed=1234):
         super().__init__()
         self.save_hyperparameters(ignore=['model_type'])
         self.train_tfms = tfms.A.Adapter([*tfms.A.aug_tfms(size=image_size, presize=image_size), tfms.A.Normalize()])
         self.valid_tfms = tfms.A.Adapter([*tfms.A.resize_and_pad(image_size), tfms.A.Normalize()])
+        self.train_tfms = self.valid_tfms
         m = icevision
         for mod in model_type.split('.'):
             m = getattr(m, mod)
@@ -43,7 +48,7 @@ class DentalCariesDataModule(pl.LightningDataModule):
     def setup(self, stage : Optional[str] = None):
         template_record = ObjectDetectionRecord()
         parser = DentalCariesParser(template_record, Path(self.hparams.data_root))
-        train_record, valid_record = parser.parse()
+        train_record, valid_record = parser.parse(data_splitter=RandomSplitter([0.8, 0.2], seed=self.hparams.seed))
         self.train_ds = Dataset(train_record, self.train_tfms)
         self.valid_ds = Dataset(valid_record, self.valid_tfms)
 

@@ -1,6 +1,6 @@
 model_type : models.ross.efficientdet
-backbone : tf_df4
-img_size : 1024
+backbone : tf_d4
+img_size : 512
 model :
   _target_ : src.modules.EfficientDetModule.EfficientDetModule
   model : 

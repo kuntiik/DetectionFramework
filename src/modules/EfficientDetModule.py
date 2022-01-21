@@ -1,6 +1,7 @@
 from icevision.all import *
 import pytorch_lightning as pl
 from icevision.models.ross import efficientdet
+from torchmetrics import MaxMetric
 
 
 class EfficientDetModule(pl.LightningModule):
@@ -10,13 +11,11 @@ class EfficientDetModule(pl.LightningModule):
         self.model = model
         self.metrics = [COCOMetric(metric_type=COCOMetricType.bbox) ]
         # self.metrics_keys_to_log_to_prog_bar = [ ("AP (IoU=0.50:0.95) area=all", "COCOMetric") ]
-        self.metrics_keys_to_log_to_prog_bar = [ ("AP (IoU=0.50) area=all", "COCOMetric") ]
+        self.metrics_keys_to_log_to_prog_bar = [ ("AP (IoU=0.50) area=all", "val/Pascal_VOC") ]
+        self.max_map50  = MaxMetric()
     
     def forward(self, *args, **kwargs):
         return self.model(*args, **kwargs)
-
-    def configure_optimizers(self):
-        return Adam(self.parameters(), lr=self.hparams.learning_rate)
     
     def training_step(self, batch, batch_idx):
         (xb, yb), records = batch
@@ -53,6 +52,16 @@ class EfficientDetModule(pl.LightningModule):
                     if entry[0] == k:
                         self.log(entry[1], v, prog_bar=True)
                         self.log(f"{metric.name}/{k}", v)
-                        print(k, v, "\n")
                     else:
-                        self.log(f"{metric.name}/{k}", v)
+                        self.log(f"val/{metric.name}/{k}", v)
+
+    def configure_optimizers(self):
+        optimizer = Adam(self.parameters(), lr=self.hparams.learning_rate)
+        scheduler = { 
+            'scheduler' : torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer),
+            'monitor' : 'valid/loss',
+            'interval' : 'epoch', 
+            'name' : 'lr'
+        }
+        # return  [optimizer], [scheduler]
+        return optimizer

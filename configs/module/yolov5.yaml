@@ -7,7 +7,7 @@ model :
     _target_ : icevision.${module.model_type}.model
     backbone :
       _target_ : icevision.${module.model_type}.backbones.${module.backbone}
-      pretrained : 0
+      pretrained : 1
     num_classes : 2
     img_size : ${module.img_size} 
   learning_rate : 1e-4

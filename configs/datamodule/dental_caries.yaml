@@ -1,6 +1,6 @@
-_target_ : src.datamodules.DentalCaries.DentalCariesDataModule
-data_root : /home/kuntik/carries_dataset
+_target_ : src.datamodules.DentalCaries.DentalCariesDataModule data_root : /home.stud/kuntluka/dataset/carries_dataset
+#data_root : /home/kuntik/carries_dataset
 image_size : ${module.img_size}
 model_type : ${module.model_type}
-batch_size : 1
-num_workers : 1
+batch_size : 2
+num_workers : 8

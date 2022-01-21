@@ -1,4 +1,4 @@
 wandb:
   _target_ : pytorch_lightning.loggers.wandb.WandbLogger
   project : "ice_framework"
-  name : "efficient_det"
+  name : ${name}
