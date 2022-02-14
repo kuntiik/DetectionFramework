@@ -1,6 +1,9 @@
 model_type : models.ross.efficientdet
 backbone : tf_d4
-img_size : 512
+img_size : 1024
+# pretrained : '/home.stud/kuntluka/DetectionFramework/epoch_045.ckpt'
+pretrained : '/home.stud/kuntluka/DetectionFramework/epoch_027.ckpt'
+# pretrained : null
 model :
   _target_ : src.modules.EfficientDetModule.EfficientDetModule
   model : 
@@ -11,3 +14,7 @@ model :
     num_classes : 2
     img_size : ${module.img_size} 
   learning_rate : 1e-4
+  optimizer : "adam"
+  scheduler_patience : 5
+  scheduler_factor : 0.2
+  weight_decay : 1e-6

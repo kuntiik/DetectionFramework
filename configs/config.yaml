@@ -5,10 +5,12 @@ defaults:
   - datamodule : dental_caries.yaml
   - logger : wandb.yaml
   - callbacks : callbacks.yaml
+  - hparams_search: null
+
   # - logger: wandb # set logger here or use command line (e.g. `python run.py logger=wandb`)
   - override hydra/hydra_logging: colorlog
   - override hydra/job_logging: colorlog
 
-seed : 123
+seed : 42
 name : null
 ignore_warnings: False

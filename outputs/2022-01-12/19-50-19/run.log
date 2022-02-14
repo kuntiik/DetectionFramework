@@ -1,2 +1,0 @@
-[2022-01-12 19:50:22,602][timm.models.helpers][INFO] - Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/tf_efficientnet_lite0-0aa007d2.pth)
-[2022-01-12 19:51:15,246][src.train][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>

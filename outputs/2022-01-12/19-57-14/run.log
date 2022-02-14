@@ -1,4 +1,0 @@
-[2022-01-12 19:57:16,979][timm.models.helpers][INFO] - Loading pretrained weights from url (https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/tf_efficientnet_lite0-0aa007d2.pth)
-[2022-01-12 19:57:17,228][src.train][INFO] - Instantiating callback <pytorch_lightning.callbacks.RichProgressBar>
-[2022-01-12 19:57:17,231][src.train][INFO] - Instantiating logger <pytorch_lightning.loggers.wandb.WandbLogger>
-[2022-01-12 19:57:17,248][src.train][INFO] - Starting training
