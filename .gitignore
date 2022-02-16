@@ -1,3 +1,7 @@
 lightning_logs/
 outputs/
 .vscode
+*.ckpt
+*.db
+wandb/
+__pycache__/

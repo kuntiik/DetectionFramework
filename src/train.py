@@ -40,7 +40,7 @@ def train(config: DictConfig):
 
     # use hydra to instantiate the model, datamodule and trainer
     model = hydra.utils.instantiate(config.module.model)
-    if config.module.pretrained != None:
+    if config.get("pretrained"):
         checkpoint = torch.load(config.module.pretrained)
         model.load_state_dict(checkpoint["state_dict"])
 
@@ -49,18 +49,19 @@ def train(config: DictConfig):
         config.trainer,
         logger=logger,
         callbacks=callbacks,
-        plugins=[DDPPlugin(find_unused_parameters=False)],
+        # strategy="ddp"
+        # plugins=[DDPPlugin(find_unused_parameters=False)],
     )
 
     trainer.tune(model=model, datamodule=dm)
     log.info("Starting training")
     trainer.fit(model=model, datamodule=dm)
 
-    optimized_metric = config.get("optimized_metric")
-    if optimized_metric and optimized_metric not in trainer.callback_metrics:
-        raise Exception(
-            "Metric for hyperparameter optimization not found! "
-            "Make sure the `optimized_metric` in `hparams_search` config is correct!"
-        )
-    score = trainer.callback_metrics.get(optimized_metric)
-    return score
+    # optimized_metric = config.get("optimized_metric")
+    # if optimized_metric and optimized_metric not in trainer.callback_metrics:
+    #     raise Exception(
+    #         "Metric for hyperparameter optimization not found! "
+    #         "Make sure the `optimized_metric` in `hparams_search` config is correct!"
+    #     )
+    # score = trainer.callback_metrics.get(optimized_metric)
+    # return score

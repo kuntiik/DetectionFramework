@@ -6,26 +6,56 @@ import pytorch_lightning as pl
 
 
 class YoloV5Module(pl.LightningModule):
-    def __init__(self, model: nn.Module, learning_rate):
+    def __init__(
+        self,
+        model: nn.Module,
+        learning_rate,
+        optimizer="adam",
+        scheduler_patience=10,
+        scheduler_factor=0.2,
+        weight_decay=1e-6,
+    ):
         super().__init__()
         self.model = model
         self.save_hyperparameters(ignore=["model"])
 
         self.metrics = [COCOMetric(metric_type=COCOMetricType.bbox)]
         self.compute_loss = ComputeLoss(model)
-        self.metrics_keys_to_log_to_prog_bar = [ ("AP (IoU=0.50) area=all", "COCOMetric") ]
+        self.metrics_keys_to_log_to_prog_bar = [("AP (IoU=0.50) area=all", "val/Pascal_VOC")]
 
     def forward(self, *args, **kwargs):
         return self.model(*args, **kwargs)
 
     def configure_optimizers(self):
-        return Adam(self.parameters(), lr=self.hparams.learning_rate)
+        if self.hparams.optimizer == "adam":
+            optimizer = Adam(
+                self.parameters(),
+                lr=self.hparams.learning_rate,
+                weight_decay=self.hparams.weight_decay,
+            )
+        else:
+            optimizer = SGD(
+                self.parameters(),
+                lr=self.hparams.learning_rate,
+                weight_decay=self.hparams.weight_decay,
+            )
+        scheduler = {
+            "scheduler": torch.optim.lr_scheduler.ReduceLROnPlateau(
+                optimizer=optimizer,
+                factor=self.hparams.scheduler_factor,
+                patience=self.hparams.scheduler_patience,
+            ),
+            "monitor": "val/loss",
+            "interval": "epoch",
+            "name": "lr",
+        }
+        return [optimizer], [scheduler]
 
     def training_step(self, batch, batch_idx):
         (xb, yb), _ = batch
         preds = self(xb)
         loss = self.compute_loss(preds, yb)[0]
-        self.log("train_loss", loss)
+        self.log("train/loss", loss)
 
         return loss
 
@@ -44,7 +74,7 @@ class YoloV5Module(pl.LightningModule):
             loss = self.compute_loss(training_out, yb)[0]
 
         self.accumulate_metrics(preds)
-        self.log("val_loss", loss)
+        self.log("val/loss", loss)
 
     def validation_epoch_end(self, outs):
         self.finalize_metrics()
@@ -61,6 +91,5 @@ class YoloV5Module(pl.LightningModule):
                     if entry[0] == k:
                         self.log(entry[1], v, prog_bar=True)
                         self.log(f"{metric.name}/{k}", v)
-                        print(k, v, "\n")
                     else:
-                        self.log(f"{metric.name}/{k}", v)
+                        self.log(f"val/{metric.name}/{k}", v)

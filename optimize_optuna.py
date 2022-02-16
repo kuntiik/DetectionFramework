@@ -144,7 +144,7 @@ def main():
         pruner=pruner,
         # storage="sqlite:///optim_optuna.db",
         storage="mysql://root@34.116.169.28/example",
-        study_name="effnet_optim",
+        study_name="effnet_optim2",
     )
     # study.optimize(lambda trial: objective(trial, cfg), n_trials=50, n_jobs=4)
     study.optimize(Objective(GpuQueue(), cfg), n_trials=50, n_jobs=4)
