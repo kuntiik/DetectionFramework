@@ -17,7 +17,8 @@ This project rellies on many external dependencies. The main dependencies are as
 ## How to run
 You can run the project with default setting by `python run.py`
 
-## How to change setting
+## How to change the program settings
+This project rellies in Hydra to manage configuration. The configuration is divided into separate files for each part of the program e.g., configuration for model, datamodule, etc. For more details read the project structure section.
 Most of the settings can be changed from command line. You can override any configuration by appending `<settings to change>=<reqiured settings>` to the `python run command`. For example `python run.py module=yolov5`. You can also add configuration, that is not specified in .yaml files by `+<setting to change>=<required settings>`, eg. `+trainer.fast_dev_run=True`. You have to look into documentation of the particular method to get list of all parameters or you can install Hydra's autocompletion by running the following command: `python run.py --hydra-help` and than following the manual, that will pop-up. 
 
 ## Project structure
@@ -46,29 +47,22 @@ Most of the settings can be changed from command line. You can override any conf
     └── utils                     
 ```
 
-## To run:
-
-
-# How to setup
-- default setup in config.yaml
-- swap the model by -module=efficient_det.yaml / -module=efficient_det.yaml
-- set all parameters in the module config, except for batch_size
-
 ## Hyper-parameter search
 This framework supports hyper-parameter search powered by Optuna. Optuna is a optimization toolbox, that uses methods shuch as Tree-structured Parzen Estimator to propose hyper-parameters to use in the next trial. The history of runs is kept in SQL database. You can optimization on multiple machines if you specify the path to you SQL storage. 
 There are mutliple options how to use optuna by this framework.
  ```{bash}
  pyhton run.py -m hprarams_search=<config from hparams_search folder>
  ```
- This is the fastest possible approach to setup, but Optuna will have limited capabilities. There will be no prunning available and search-space configuration is limited
+ This is the fastest possible approach to setup, but Optuna will have limited capabilities. There will be no prunning available and search-space configuration is limited. The search space is defined in the .yaml config file. 
  <br>
  ```{bash}
  python optimize_optuna.py
  ```
- Multi-process Optuna search. You need to modify content of this file (specify search-space and config overrides). This is discouraged approach, since there are situations, when single or more processes freeze. I am working on fixing this issue.
+ Will launch multi-process Optuna search. You need to modify the content of this file (specify search-space and config overrides). This is discouraged approach, since there are situations, when single or more processes freeze. I am working on fixing this issue.
  
  <br>
+ 
  ```{bash}
  python optuna_single_process.py
  ```
- In this setting optuna launches single optimization process. You can run this file multiple times to get faster optimization results. The scaling should have near-linear impact on search time. If you run this on multiple nodes you need to provide database, that is accessible by all nodes.
+ In this setting optuna launches single optimization process. You can run this file multiple times to get faster optimization results. The scaling of number of computers should have near-linear impact on search time. If you run this on multiple nodes you need to provide database, that is accessible by all nodes.
