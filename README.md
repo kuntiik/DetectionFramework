@@ -6,20 +6,20 @@
 <a href="https://hydra.cc/"><img alt="Config: hydra" src="https://img.shields.io/badge/config-hydra 1.1-89b8cd?style=for-the-badge&labelColor=gray"></a>
 <a href="https://black.readthedocs.io/en/stable/"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-black.svg?style=for-the-badge&labelColor=gray"></a>
 </div>
-## Intorduction 
-This is an object detection framework, which was made for dental caries detection from X-ray images. Despite it's purpose it can be modified to serve as general object detection framework.
+## Introduction 
+This is an object detection framework, which was made for dental caries detection from X-ray images. Despite its purpose, it can be modified to serve as a general object detection framework.
 ## How to install
-This project rellies on many external dependencies. The main dependencies are as follows: Pytorch-Lightning, Hydra, IceVision, Optuna. You can install this project by following commands (conda required).
+This project relies on many external dependencies. The main dependencies are as follows: Pytorch-Lightning, Hydra, IceVision, Optuna. You can install this project by following commands (conda required).
 ```{bash}
 - conda env create -f environment.yaml
-- canda activate detection
+- conda activate detection
 ```
 ## How to run
-You can run the project with default setting by `python run.py`
+You can run the project with the default setting by `python run.py`
 
 ## How to change the program settings
-This project rellies in Hydra to manage configuration. The configuration is divided into separate files for each part of the program e.g., configuration for model, datamodule, etc. For more details read the project structure section.
-Most of the settings can be changed from command line. You can override any configuration by appending `<settings to change>=<reqiured settings>` to the `python run command`. For example `python run.py module=yolov5`. You can also add configuration, that is not specified in .yaml files by `+<setting to change>=<required settings>`, eg. `+trainer.fast_dev_run=True`. You have to look into documentation of the particular method to get list of all parameters or you can install Hydra's autocompletion by running the following command: `python run.py --hydra-help` and than following the manual, that will pop-up. 
+This project relies on Hydra to manage the configuration. The configuration is divided into separate files for each part of the program, e.g., configuration for model, datamodule, etc. For more details, read the project structure section.
+Most of the settings can be changed from the command line. You can override any configuration by appending `<settings to change>=<reqiured settings>` to the `python run command`. For example, `python run.py module=yolov5`. You can also add configuration, that is not specified in .yaml files by `+<setting to change>=<required settings>`, eg. `+trainer.fast_dev_run=True`. You have to look into the documentation of the particular method to get a list of all parameters, or you can install Hydra's autocompletion by running the following command: `python run.py --hydra-help` and then following the manual, that will pop up. 
 
 ## Project structure
 
@@ -48,21 +48,22 @@ Most of the settings can be changed from command line. You can override any conf
 ```
 
 ## Hyper-parameter search
-This framework supports hyper-parameter search powered by Optuna. Optuna is a optimization toolbox, that uses methods shuch as Tree-structured Parzen Estimator to propose hyper-parameters to use in the next trial. The history of runs is kept in SQL database. You can optimization on multiple machines if you specify the path to you SQL storage. 
+This framework supports hyper-parameter search powered by Optuna. Optuna is an optimization toolbox that uses methods such as Tree-structured Parzen Estimator to propose hyper-parameters to use in the next trial. The history of runs is kept in SQL database. You can do the optimization on multiple computer even mutliple nodes if you specify the path to you SQL storage. 
 There are mutliple options how to use optuna by this framework.
  ```{bash}
  pyhton run.py -m hprarams_search=<config from hparams_search folder>
  ```
- This is the fastest possible approach to setup, but Optuna will have limited capabilities. There will be no prunning available and search-space configuration is limited. The search space is defined in the .yaml config file. 
+ This is the fastest possible approach to setup, but Optuna will have limited capabilities. There will be no pruning available, and search-space configuration is limited. The search space is defined in the .yaml config file. 
  <br>
  ```{bash}
  python optimize_optuna.py
  ```
- Will launch multi-process Optuna search. You need to modify the content of this file (specify search-space and config overrides). This is discouraged approach, since there are situations, when single or more processes freeze. I am working on fixing this issue.
+ Will launch multi-process Optuna search. You need to modify the content of this file (specify search-space and config overrides). This is a discouraged approach since there are situations when single or more processes freeze. I am working on fixing this issue.
  
  <br>
  
  ```{bash}
  python optuna_single_process.py
  ```
- In this setting optuna launches single optimization process. You can run this file multiple times to get faster optimization results. The scaling of number of computers should have near-linear impact on search time. If you run this on multiple nodes you need to provide database, that is accessible by all nodes.
+ In this setting, optuna launches a single optimization process. You can run this file multiple times to get faster optimization results. The scaling of the number of computers should have a near-linear impact on search time. If you run this on multiple nodes, you need to provide a database that is accessible to all nodes.
+
