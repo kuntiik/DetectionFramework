@@ -6,10 +6,13 @@
 <a href="https://hydra.cc/"><img alt="Config: hydra" src="https://img.shields.io/badge/config-hydra 1.1-89b8cd?style=for-the-badge&labelColor=gray"></a>
 <a href="https://black.readthedocs.io/en/stable/"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-black.svg?style=for-the-badge&labelColor=gray"></a>
 </div>
+
 ## Introduction 
 This is an object detection framework, which was made for dental caries detection from X-ray images. Despite its purpose, it can be modified to serve as a general object detection framework.
+
 ## How to install
 This project relies on many external dependencies. The main dependencies are as follows: Pytorch-Lightning, Hydra, IceVision, Optuna. You can install this project by following commands (conda required).
+
 ```{bash}
 - conda env create -f environment.yaml
 - conda activate detection
