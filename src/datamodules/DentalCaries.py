@@ -50,18 +50,6 @@ class DentalCariesDataModule(pl.LightningDataModule):
 
         # t = tfms.A.Adapter(
         #     [
-        #         A.HorizontalFlip(p=0.5),
-        #         A.VerticalFlip(p=0.5),
-        #         A.SafeRotate(limit=15, interpolation=cv2.INTER_CUBIC, p=0.2),
-        #         A.RandomGamma(p=0.2),
-        #         A.Affine(translate_percent=10, p=0.5),
-        #         A.OneOf([A.GaussianBlur(), A.Sharpen()], p=1),
-        #         *tfms.A.resize_and_pad(image_size),
-        #         # tfms.A.Normalize()
-        #         A.Normalize(mean=self.ds_normalize["mean"], std=self.ds_normalize["std"]),
-        #         # ToTensorV2()
-        #         # A.GaussianBlur(p=0.5),
-        #         # A.Sharpen(0.5)
         #     ]
         # )
         if transforms is not None:

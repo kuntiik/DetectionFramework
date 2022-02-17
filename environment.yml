@@ -1,4 +1,4 @@
-name: ice
+name: detection
 channels:
   - fastai
   - pytorch

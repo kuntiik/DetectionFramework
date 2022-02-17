@@ -1,0 +1,37 @@
+horizontal_flip:
+  apply: True
+  t:
+    _target_: albumentations.HorizontalFlip
+    p : 0.5
+
+vertical_flip:
+  apply: True
+  t:
+    _target_ : albumentations.VerticalFlip
+    p : 0.5
+
+rotate:
+  apply: False
+  t:
+    _target_ : albumentations.SafeRotate
+
+affine_transform:
+  apply : False
+  t:
+    _target_ : albumentations.Affine
+    translate_percent : 5
+    p : 0.5
+
+gaussian_blur:
+  apply: True
+  t:
+    _target_ : albumentations.GaussianBlur
+    blur_limit : [9, 39]
+    p : 0.3
+
+random_gamma:
+  apply : False
+  t:
+    _target_ : albumentations.RandomGamma
+    gamma_limit : [80, 120]
+    p : 0.3

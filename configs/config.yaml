@@ -6,6 +6,7 @@ defaults:
   - logger : wandb.yaml
   # - logger : null
   - callbacks : callbacks.yaml
+  - transforms : yolo_searched.yaml
   - experiment : null
 
   - hparams_search: null
