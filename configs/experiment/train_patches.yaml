@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - override /module : yolov5.yaml
+  - override /transforms : patches.yaml
+
+datamodule:
+  batch_size : 8
+
+module:
+  img_size : 512
+  pretrained : null
+  model.preprocess_val : 2

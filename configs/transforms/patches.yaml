@@ -1,3 +1,21 @@
+extract_patch:
+  apply : True
+  t:
+    _target_ : src.utils.transforms.RandomCropNearBBoxFixed
+    # target_size : [ ${module.img_size}, ${module.img_size} ]
+    target_size : ${module.img_size}
+    p : 1
+
+pad_if_needed:
+  apply : True
+  t:
+    _target_ : albumentations.PadIfNeeded
+    min_height : ${module.img_size}
+    min_width : ${module.img_size}
+    border_mode : 0
+    p : 1
+
+
 horizontal_flip:
   apply: True
   t:

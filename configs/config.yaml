@@ -7,7 +7,7 @@ defaults:
   # - logger : null
   - callbacks : callbacks.yaml
   - transforms : yolo_searched.yaml
-  - experiment : null
+  - experiment : train_patches.yaml
 
   - hparams_search: null
 

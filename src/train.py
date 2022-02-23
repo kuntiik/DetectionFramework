@@ -12,9 +12,10 @@ from pytorch_lightning import (
 from pytorch_lightning.loggers import LightningLoggerBase
 from icevision.all import models
 import icevision
-import pytorch_lightning
+import pytorch_lightning as pl
 from pytorch_lightning.plugins import DDPPlugin
 import albumentations as A
+
 
 from src.utils import utils
 
@@ -70,6 +71,11 @@ def train(config: DictConfig):
 
     trainer.fit(model=model, datamodule=dm)
 
+    for lg in logger:
+        if isinstance(lg, pl.loggers.wandb.WandbLogger):
+            import wandb
+
+            wandb.finish()
     # optimized_metric = config.get("optimized_metric")
     # if optimized_metric and optimized_metric not in trainer.callback_metrics:
     #     raise Exception(

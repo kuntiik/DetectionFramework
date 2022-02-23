@@ -5,3 +5,4 @@ image_size : ${module.img_size}
 model_type : ${module.model_type}
 batch_size : 1
 num_workers : 8
+limit_train_samples : null
