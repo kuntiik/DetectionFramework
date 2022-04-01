@@ -1,21 +1,10 @@
+
 rich_progress_bar:
   _target_: pytorch_lightning.callbacks.RichProgressBar
 
 # model_summary:
 #   _target_: pytorch_lightning.callbacks.RichModelSummary
 #   max_depth: 1
-
-model_checkpoint:
-
-  _target_: pytorch_lightning.callbacks.ModelCheckpoint
-  monitor: "val/Pascal_VOC" 
-  mode: "max" # "max" means higher metric value is better, can be also "min"
-  save_top_k: 1
-  save_last: True 
-  verbose: False
-  dirpath: "checkpoints/"
-  filename: "epoch_{epoch:03d}"
-  auto_insert_metric_name: False
 
 learning_rate_monitor : 
   _target_ : pytorch_lightning.callbacks.LearningRateMonitor
@@ -28,9 +17,3 @@ early_stopping:
   mode: "min" # "max" means higher metric value is better, can be also "min"
   patience: 10 # how many validation epochs of not improving until training stops
   min_delta: 0.001 # minimum change in the monitored metric needed to qualify as an improvement
-
-# log_images:
-# # training_map:
-#   _target_ : src.callbacks.compute_metrics.LogImagePredictionsDetectionFull
-#   interval : 1
-#   interval : 10

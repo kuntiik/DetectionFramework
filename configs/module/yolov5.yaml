@@ -1,6 +1,6 @@
 model_type : models.ultralytics.yolov5
 backbone : large_p6
-img_size : 960
+img_size : 1024
 pretrained : '/home.stud/kuntluka/DetectionFramework/epoch_007.ckpt'
 model :
   _target_ : src.modules.YoloV5Module.YoloV5Module

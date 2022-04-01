@@ -72,6 +72,32 @@ class EfficientDetModule(pl.LightningModule):
                 self.log(f"val/{k}", v)
         self.accumulate_metrics(preds)
 
+    def predict_step(self, batch, batch_idx):
+        (xb, yb), records = batch
+        with torch.no_grad():
+            raw_preds = self(xb, yb)
+            preds = efficientdet.convert_raw_predictions(
+                (xb, yb),
+                raw_preds["detections"],
+                records,
+                detection_threshold=0.001,
+                # nms_iou_threshold=0.6,
+            )
+        return preds
+
+    def predict_batch(self, batch, batch_idx):
+        (xb, yb), records = batch
+        with torch.no_grad():
+            raw_preds = self(xb, yb)
+            preds = efficientdet.convert_raw_predictions(
+                (xb, yb),
+                raw_preds["detections"],
+                records,
+                detection_threshold=0.001,
+                # nms_iou_threshold=0.6,
+            )
+        return preds
+
     def validation_epoch_end(self, outs):
         # mAP_dict = self.mAP.compute()
         # self.log_dict(mAP_dict)

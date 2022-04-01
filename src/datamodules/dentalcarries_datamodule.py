@@ -53,6 +53,7 @@ class DentalCarriesDataModule(LightningDataModule):
     def test_dataloader(self):
         return DataLoader(self.test_dataset, self.hparams.batch_size,num_workers=self.hparams.num_workers, pin_memory=self.hparams.pin_memory, shuffle=False, collate_fn=self.collate)
     
+    
     def default_transforms(self):
         cars_transforms = A.Compose([
             A.Resize(width=1014, height=768),

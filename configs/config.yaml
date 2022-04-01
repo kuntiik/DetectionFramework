@@ -6,8 +6,8 @@ defaults:
   - logger : wandb.yaml
   # - logger : null
   - callbacks : callbacks.yaml
-  - transforms : yolo_searched.yaml
-  - experiment : train_patches.yaml
+  - transforms : t_search1.yaml
+  - experiment : train_yolo.yaml
 
   - hparams_search: null
 
@@ -18,3 +18,4 @@ defaults:
 seed : 42
 name : null
 ignore_warnings: False
+print_config : True
